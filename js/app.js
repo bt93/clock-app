@@ -14,6 +14,7 @@ function getTime() {
 	let sec = d.getSeconds();
 	let isAmPm = "AM";
 	let currentTime;
+	let formatedTime;
 
 	if (hr > 12) {
 		hr -= 12;
@@ -33,14 +34,18 @@ function getTime() {
 		sec = '0' + sec;
 	}
 
-	currentTime = `${day}, ${month} ${date}, ${year}\n${hr}:${min}:${sec} ${isAmPm}`;
+	currentTime = `${day}, ${month} ${date}, ${year}<div>${hr}:${min}:${sec} ${isAmPm}<div>`;
 	return currentTime;
 }
+
+let h1 = document.getElementById('time');
 // Calls curent time
-getTime();
+formatedTime = getTime();
+h1.innerHTML = formatedTime;
 
 // Recals getTime() every .5 seconds
 setInterval(function() {
-	getTime();
-},500);
+	formatedTime = getTime();
+	h1.innerHTML = formatedTime;
+},100);
 
