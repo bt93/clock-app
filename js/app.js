@@ -34,18 +34,32 @@ function getTime() {
 		sec = '0' + sec;
 	}
 
-	currentTime = `${day}, ${month} ${date}, ${year}<div>${hr}:${min}:${sec} ${isAmPm}<div>`;
+	currentTime = `<h1>${day}, ${month} ${date}, ${year}</h1><h2>${hr}:${min}:${sec} ${isAmPm}</h2>`;
 	return currentTime;
 }
 
-let h1 = document.getElementById('time');
+let time = document.getElementById('time');
+let image = document.getElementById('img');
 // Calls curent time
 formatedTime = getTime();
-h1.innerHTML = formatedTime;
+time.innerHTML = formatedTime;
 
 // Recals getTime() every .5 seconds
 setInterval(function() {
 	formatedTime = getTime();
-	h1.innerHTML = formatedTime;
+	time.innerHTML = formatedTime;
 },100);
 
+fetch(`https://api.unsplash.com/photos/random`, {
+    headers: {
+        		Authorization: 'Client-ID 37ee3e9dba8dbfa5cc22fd5c80f872d5fda634ed70fc538f3755917fc719c8e4'
+		    }
+		})
+		.then(response => response.json())
+		.then(addImage)
+		.catch(e => requestError(e, 'image'));
+
+function addImage(data) {
+	let htmlContent = `<img src="${data.urls.small}" alt="${data.description}"></img>`;
+	image.innerHTML = htmlContent;
+}
