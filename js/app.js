@@ -36,6 +36,11 @@ function getTime() {
 	currentTime = `${day}, ${month} ${date}, ${year}\n${hr}:${min}:${sec} ${isAmPm}`;
 	return currentTime;
 }
+// Calls curent time
+getTime();
 
+// Recals getTime() every .5 seconds
+setInterval(function() {
+	getTime();
+},500);
 
-console.log(getTime());
