@@ -9,12 +9,16 @@ function getTime() {
 	let month = months[d.getMonth()];
 	let day = days[d.getDay()];
 	let year = d.getFullYear();
-	let hr = d.getHours();
+	let hr = d.getHours(12);
 	let min = d.getMinutes();
 	let sec = d.getSeconds();
 	let isAmPm = "AM";
 	let currentTime;
 	let formatedTime;
+
+	if (hr === 12) {
+		isAmPm = "PM";
+	}
 
 	if (hr > 12) {
 		hr -= 12;
