@@ -1,0 +1,12 @@
+* {
+	box-sizing: border-box;
+}
+
+#time {
+	text-align: center;
+}
+
+#img,
+.center {
+	text-align: center;
+}
