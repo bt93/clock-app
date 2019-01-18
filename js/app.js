@@ -66,7 +66,10 @@ function getTime() {
 				.catch(e => requestError(e, 'image'));
 
 		function addImage(data) {
-			let htmlContent = `<img src="${data.urls.small}" alt="${data.description}"></img>`;
+			let htmlContent = `<figure>
+			<img src="${data.urls.small}" alt="${data.description}"></img>
+			<figcaption>Photo by ${data.user.name}.</figcaption>
+			</figure>`;
 			image.innerHTML = htmlContent;
 		}
 })();
