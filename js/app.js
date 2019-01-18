@@ -1,6 +1,8 @@
 // Months and days for easy access
 let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+let time = document.getElementById('time');
+let image = document.getElementById('img');
 
 function getTime() {
 	// Gets current date and formats
@@ -9,7 +11,7 @@ function getTime() {
 	let month = months[d.getMonth()];
 	let day = days[d.getDay()];
 	let year = d.getFullYear();
-	let hr = d.getHours(12);
+	let hr = d.getHours();
 	let min = d.getMinutes();
 	let sec = d.getSeconds();
 	let isAmPm = "AM";
@@ -42,28 +44,29 @@ function getTime() {
 	return currentTime;
 }
 
-let time = document.getElementById('time');
-let image = document.getElementById('img');
-// Calls curent time
-formatedTime = getTime();
-time.innerHTML = formatedTime;
-
-// Recals getTime() every .5 seconds
-setInterval(function() {
+	// Calls curent time
 	formatedTime = getTime();
 	time.innerHTML = formatedTime;
-},100);
 
-fetch(`https://api.unsplash.com/photos/random`, {
-    headers: {
-        		Authorization: 'Client-ID 37ee3e9dba8dbfa5cc22fd5c80f872d5fda634ed70fc538f3755917fc719c8e4'
-		    }
-		})
-		.then(response => response.json())
-		.then(addImage)
-		.catch(e => requestError(e, 'image'));
+	// Recals getTime() every .5 seconds
+	setInterval(function() {
+		formatedTime = getTime();
+		time.innerHTML = formatedTime;
+	},50);
 
-function addImage(data) {
-	let htmlContent = `<img src="${data.urls.small}" alt="${data.description}"></img>`;
-	image.innerHTML = htmlContent;
-}
+
+(function(){
+		fetch(`https://api.unsplash.com/photos/random`, {
+		    headers: {
+		        		Authorization: 'Client-ID 37ee3e9dba8dbfa5cc22fd5c80f872d5fda634ed70fc538f3755917fc719c8e4'
+				    }
+				})
+				.then(response => response.json())
+				.then(addImage)
+				.catch(e => requestError(e, 'image'));
+
+		function addImage(data) {
+			let htmlContent = `<img src="${data.urls.small}" alt="${data.description}"></img>`;
+			image.innerHTML = htmlContent;
+		}
+})();
