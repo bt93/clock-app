@@ -3,7 +3,9 @@ let months = ["January", "February", "March", "April", "May", "June", "July", "A
 let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 let time = document.getElementById('time');
 let image = document.getElementById('img');
-let timeInput = document.getElementById('time-input');
+let hourInput = document.getElementById('hour-input');
+let minuteInput = document.getElementById('minute-input');
+let amPmInput = document.getElementById('am-pm');
 let inputButton = document.getElementById('input-button');
 
 function getTime() {
@@ -55,13 +57,48 @@ function getTime() {
 		formatedTime = getTime();
 		time.innerHTML = formatedTime;
 	},50);
-	
+
+	function makeClock() {
+		for (let i = 1; i < 13; i++) {
+			if (i < 10) {
+				i = '0' + i;
+			}
+			let hourNode = document.createElement('option');
+			let hourTextNode = document.createTextNode(i);
+			hourNode.appendChild(hourTextNode);
+			hourInput.appendChild(hourNode);
+		}
+
+		for (let x = 0; x < 61; x++) {
+			if (x < 10) {
+				x = '0' + x;
+			}
+			let minuteNode = document.createElement('option');
+			let minuteTextNode = document.createTextNode(x);
+			minuteNode.appendChild(minuteTextNode);
+			minuteInput.appendChild(minuteNode);
+		}
+	}
+
+	makeClock();
+
+	function setClock() {
+		let date = new Date();
+		let hour = date.getHours();
+		let miniutes = date.getMinutes();
+
+		
+
+		setInterval(function() {
+			if (hourInput.value === hour && minuteInput === miniutes) {
+				console.log('RING');
+				return null
+			}
+		},50)
+	}
 
 	inputButton.addEventListener('click', function() {
-		console.log(timeInput.value);
-		if(timeInput.value === "01:00") {
-			console.log('RING')l
-		}
+		setClock();
 	});
 
 
