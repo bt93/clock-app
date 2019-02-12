@@ -59,6 +59,7 @@ function getTime() {
 	},50);
 
 	function makeClock() {
+		// loops through hour and minutes to make new options
 		for (let i = 1; i < 13; i++) {
 			if (i < 10) {
 				i = '0' + i;
@@ -66,6 +67,7 @@ function getTime() {
 			let hourNode = document.createElement('option');
 			let hourTextNode = document.createTextNode(i);
 			hourNode.appendChild(hourTextNode);
+			hourNode.setAttribute('value', i)
 			hourInput.appendChild(hourNode);
 		}
 
@@ -76,6 +78,7 @@ function getTime() {
 			let minuteNode = document.createElement('option');
 			let minuteTextNode = document.createTextNode(x);
 			minuteNode.appendChild(minuteTextNode);
+			minuteNode.setAttribute('value', x)
 			minuteInput.appendChild(minuteNode);
 		}
 	}
