@@ -3,6 +3,8 @@ let months = ["January", "February", "March", "April", "May", "June", "July", "A
 let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 let time = document.getElementById('time');
 let image = document.getElementById('img');
+let timeInput = document.getElementById('time-input');
+let inputButton = document.getElementById('input-button');
 
 function getTime() {
 	// Gets current date and formats
@@ -53,6 +55,14 @@ function getTime() {
 		formatedTime = getTime();
 		time.innerHTML = formatedTime;
 	},50);
+	
+
+	inputButton.addEventListener('click', function() {
+		console.log(timeInput.value);
+		if(timeInput.value === "01:00") {
+			console.log('RING')l
+		}
+	});
 
 
 (function(){
