@@ -7,7 +7,8 @@ let hourInput = document.getElementById('hour-input');
 let minuteInput = document.getElementById('minute-input');
 let amPmInput = document.getElementById('am-pm');
 let inputButton = document.getElementById('input-button');
-let makeInterval = setInterval(setClock, 50);
+let audio = document.getElementById('audiotag');
+let makeInterval;
 
 function getTime() {
 	// Gets current date and formats
@@ -98,7 +99,6 @@ function setClock() {
 
 
 	if (amPmInput.value === 'PM') {
-		// console.log('test');
 		chosenHour += 12;
 	}
 
@@ -112,14 +112,12 @@ function setClock() {
 	if (chosenMin < 10) {
 		chosenMin = '0' + chosenMin;
 	}
-
-	// console.log(chosenHour + ':' + chosenMin);
 	
-
-
 	
 	if (chosenHour == hour && chosenMin == minutes) {
 		console.log('RING');
+		audio.play();
+
 		clearInterval(makeInterval);
 		return null;
 	}
@@ -127,6 +125,7 @@ function setClock() {
 
 inputButton.addEventListener('click', function() {
 	setClock();
+	makeInterval = setInterval(setClock, 50);
 });
 
 
