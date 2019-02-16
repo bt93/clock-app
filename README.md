@@ -1,0 +1,1 @@
+A simple alarm clock app using Vanilla JavaScript. [Blog post describing how it was made](https://jasonrhowie.com/blog/2019/02/alarm-clock/).
