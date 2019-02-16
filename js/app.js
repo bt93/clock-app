@@ -7,6 +7,7 @@ let hourInput = document.getElementById('hour-input');
 let minuteInput = document.getElementById('minute-input');
 let amPmInput = document.getElementById('am-pm');
 let inputButton = document.getElementById('input-button');
+let makeInterval = setInterval(setClock, 50);
 
 function getTime() {
 	// Gets current date and formats
@@ -48,78 +49,102 @@ function getTime() {
 	return currentTime;
 }
 
-	// Calls curent time
+// Calls curent time
+formatedTime = getTime();
+time.innerHTML = formatedTime;
+
+// Recals getTime() every .5 seconds
+setInterval(function() {
 	formatedTime = getTime();
 	time.innerHTML = formatedTime;
+},50);
 
-	// Recals getTime() every .5 seconds
-	setInterval(function() {
-		formatedTime = getTime();
-		time.innerHTML = formatedTime;
-	},50);
-
-	function makeClock() {
-		// loops through hour and minutes to make new options
-		for (let i = 1; i < 13; i++) {
-			if (i < 10) {
-				i = '0' + i;
-			}
-			let hourNode = document.createElement('option');
-			let hourTextNode = document.createTextNode(i);
-			hourNode.appendChild(hourTextNode);
-			hourNode.setAttribute('value', i)
-			hourInput.appendChild(hourNode);
+function makeAlarm() {
+	// loops through hour and minutes to make new options
+	for (let i = 1; i < 13; i++) {
+		if (i < 10) {
+			i = '0' + i;
 		}
-
-		for (let x = 0; x < 61; x++) {
-			if (x < 10) {
-				x = '0' + x;
-			}
-			let minuteNode = document.createElement('option');
-			let minuteTextNode = document.createTextNode(x);
-			minuteNode.appendChild(minuteTextNode);
-			minuteNode.setAttribute('value', x)
-			minuteInput.appendChild(minuteNode);
-		}
+		let hourNode = document.createElement('option');
+		let hourTextNode = document.createTextNode(i);
+		hourNode.appendChild(hourTextNode);
+		hourNode.setAttribute('value', i)
+		hourInput.appendChild(hourNode);
 	}
 
-	makeClock();
+	for (let x = 0; x < 61; x++) {
+		if (x < 10) {
+			x = '0' + x;
+		}
+		let minuteNode = document.createElement('option');
+		let minuteTextNode = document.createTextNode(x);
+		minuteNode.appendChild(minuteTextNode);
+		minuteNode.setAttribute('value', x)
+		minuteInput.appendChild(minuteNode);
+	}
+}
 
-	function setClock() {
-		let date = new Date();
-		let hour = date.getHours();
-		let miniutes = date.getMinutes();
+makeAlarm();
 
-		
+function setClock() {
+	let date = new Date();
+	let hour = date.getHours();
+	let minutes = date.getMinutes();
+	let chosenHour;
+	let chosenMin;
+	
+	chosenHour = parseInt(hourInput.value);
+	chosenMin = parseInt(minuteInput.value);
 
-		setInterval(function() {
-			if (hourInput.value === hour && minuteInput === miniutes) {
-				console.log('RING');
-				return null
-			}
-		},50)
+
+	if (amPmInput.value === 'PM') {
+		// console.log('test');
+		chosenHour += 12;
 	}
 
-	inputButton.addEventListener('click', function() {
-		setClock();
-	});
+	chosenHour = chosenHour.toString();
+	chosenMin = chosenMin.toString();
+
+	if (chosenHour < 10) {
+		chosenHour = '0' + chosenHour;
+	}
+
+	if (chosenMin < 10) {
+		chosenMin = '0' + chosenMin;
+	}
+
+	// console.log(chosenHour + ':' + chosenMin);
+	
+
+
+	
+	if (chosenHour == hour && chosenMin == minutes) {
+		console.log('RING');
+		clearInterval(makeInterval);
+		return null;
+	}
+}
+
+inputButton.addEventListener('click', function() {
+	setClock();
+});
 
 
 (function(){
-		fetch(`https://api.unsplash.com/photos/random`, {
-		    headers: {
-		        		Authorization: 'Client-ID 37ee3e9dba8dbfa5cc22fd5c80f872d5fda634ed70fc538f3755917fc719c8e4'
-				    }
-				})
-				.then(response => response.json())
-				.then(addImage)
-				.catch(e => requestError(e, 'image'));
+	fetch(`https://api.unsplash.com/photos/random`, {
+	    headers: {
+	        		Authorization: 'Client-ID 37ee3e9dba8dbfa5cc22fd5c80f872d5fda634ed70fc538f3755917fc719c8e4'
+			    }
+			})
+			.then(response => response.json())
+			.then(addImage)
+			.catch(e => requestError(e, 'image'));
 
-		function addImage(data) {
-			let htmlContent = `<figure>
-			<img src="${data.urls.small}" alt="${data.description}"></img>
-			<figcaption>Photo by ${data.user.name}.</figcaption>
-			</figure>`;
-			image.innerHTML = htmlContent;
-		}
+	function addImage(data) {
+		let htmlContent = `<figure>
+		<img src="${data.urls.small}" alt="${data.description}"></img>
+		<figcaption>Photo by ${data.user.name}.</figcaption>
+		</figure>`;
+		image.innerHTML = htmlContent;
+	}
 })();
